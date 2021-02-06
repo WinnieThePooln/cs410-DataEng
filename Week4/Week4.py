@@ -56,6 +56,8 @@ if __name__ == '__main__':
     print(ParticipantsDF["Age"].describe())
     mon_list=CrashesDF["Crash Month"].tolist()
     day_list=CrashesDF["Crash Day"].tolist()
+    
+    #get the total day of the year
     total_days=[]
     for i in range(len(day_list)):
         days_count=0;
@@ -65,6 +67,7 @@ if __name__ == '__main__':
         #print(days_count)
         total_days.append(days_count)
 
+    #change the ages of participant
     ages = ParticipantsDF["Age"].tolist()
     for i in range(len(ages)):
         if (ages[i] == 0):
@@ -82,7 +85,8 @@ if __name__ == '__main__':
     print(ages)
     ParticipantsDF["Age"] = ages
     CrashesDF['Total Days']=total_days
-
+    
+    #If the road surface condition is out of range, change the conditions
     conditions=CrashesDF["Road Surface Condition"].tolist()
     for i in range(len(conditions)):
         if conditions[i] not in range(0,4):
@@ -95,6 +99,8 @@ if __name__ == '__main__':
 
     crash_hour=CrashesDF["Crash Hour"].tolist()
     light_conditions=[]
+    #change the light conditions by crash hour:
+    #5-7:Dawn 17-19:Dusk 7-17:Daylight 99:Unkonw else:random 2,3
     for i in range(len(crash_hour)):
         if(crash_hour[i]==99):
             light_conditions.append(0)
@@ -105,7 +111,7 @@ if __name__ == '__main__':
         elif crash_hour[i] in range(7,17):
             light_conditions.append(1)
         else:
-            light_conditions.append(3)
+            light_conditions.append(random.randint(2, 3))
     print(light_conditions)
     CrashesDF["Light Condition"]=light_conditions
     #print(total_days)
